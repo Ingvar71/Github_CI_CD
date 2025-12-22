@@ -41,13 +41,13 @@ def create_app():
         client: Client = db.session.query(Client).get(client_id)
         return jsonify(client.to_json()), 200
 
-    @app.route("/clients", methods=['POST'])
+    @app.route("/clients", methods=["POST"])
     def create_client_handler():
         """
         Creating a new client
         """
-        id = request.form.get('id', type=int)
-        name = request.form.get('name', type=str)
+        id = request.form.get("id", type=int)
+        name = request.form.get("name", type=str)
         surname = request.form.get('surname', type=str)
         credit_cart = request.form.get('credit_cart', type=str)
         car_number = request.form.get('car_number', type=str)
