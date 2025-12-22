@@ -1,5 +1,12 @@
 name: Demo Workflow
-on: workflow_dispatch
+on:
+  pull_request:
+    branches:
+      -master
+  push:
+    branches:
+      -master
+  workflow_dispatch:
 jobs:
   test:
     runs-on: ubuntu-latest
