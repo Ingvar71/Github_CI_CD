@@ -26,7 +26,7 @@ def create_app():
 
     @app.route("/", methods=['GET'])
     def get_template_handler():
-        return 'OK'
+        return "OK"
 
     @app.route("/clients", methods=['GET'])
     def get_clients_handler():
