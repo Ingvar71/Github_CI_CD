@@ -1,6 +1,7 @@
+import random
+
 import factory.alchemy
 import factory.fuzzy as fuzzy
-import random
 
 from hw_29.srk.app import db
 from hw_29.srk.models import Client, Parking

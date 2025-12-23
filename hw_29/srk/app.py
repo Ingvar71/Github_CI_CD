@@ -1,13 +1,13 @@
-from flask import Flask, render_template, request, jsonify
-from flask_sqlalchemy import SQLAlchemy
-from typing import List
-from datetime import datetime
 import datetime
+from datetime import datetime
+from typing import List
 
+from flask import Flask, jsonify, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-from .models import Client, Parking, ClientParking
+from .models import Client, ClientParking, Parking
 
 
 def create_app():

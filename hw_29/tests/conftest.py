@@ -1,7 +1,10 @@
-import pytest
 from datetime import datetime
-from ..srk.app import create_app, db as _db
-from ..srk.models import Client, Parking, ClientParking
+
+import pytest
+
+from ..srk.app import create_app
+from ..srk.app import db as _db
+from ..srk.models import Client, ClientParking, Parking
 
 
 @pytest.fixture
