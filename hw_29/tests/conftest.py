@@ -3,6 +3,7 @@ from datetime import datetime
 from ..srk.app import create_app, db as _db
 from ..srk.models import Client, Parking, ClientParking
 
+
 @pytest.fixture
 def app():
     _app = create_app()
@@ -17,14 +18,14 @@ def app():
             name="Nick",
             surname="Nolton",
             credit_cart="2569456812398954",
-            car_number="HJK125U52"
+            car_number="HJK125U52",
         )
         parking = Parking(
             id=1,
             address="1 GYPSY LN RAYMOND NH 03077-1412 USA",
             opened=True,
             count_place=60,
-            count_available_places=37
+            count_available_places=37,
         )
 
         _db.session.add(client)
@@ -46,7 +47,3 @@ def client(app):
 def db(app):
     with app.app_context():
         yield _db
-
-
-
-

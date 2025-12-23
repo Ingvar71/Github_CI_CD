@@ -3,7 +3,7 @@ from typing import Dict, Any
 
 
 class Client(db.Model):
-    __tablename__ = 'client'
+    __tablename__ = "client"
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50), nullable=False)
@@ -11,18 +11,17 @@ class Client(db.Model):
     credit_cart = db.Column(db.String(50), nullable=True)
     car_number = db.Column(db.String(10), nullable=True)
 
-    id_client = db.relationship('ClientParking', back_populates='client')
+    id_client = db.relationship("ClientParking", back_populates="client")
 
     def __repr__(self):
-        return f'Client {self.name} {self.surname}'
+        return f"Client {self.name} {self.surname}"
 
     def to_json(self) -> Dict[str, Any]:
-        return {c.name: getattr(self, c.name) for c in
-                self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class Parking(db.Model):
-    __tablename__ = 'parking'
+    __tablename__ = "parking"
 
     id = db.Column(db.Integer, primary_key=True)
     address = db.Column(db.String(100), nullable=False)
@@ -30,36 +29,33 @@ class Parking(db.Model):
     count_place = db.Column(db.Integer, nullable=False)
     count_available_places = db.Column(db.Integer, nullable=False)
 
-    id_parking = db.relationship('ClientParking', back_populates='parking')
-
+    id_parking = db.relationship("ClientParking", back_populates="parking")
 
     def __repr__(self):
-        return f'Parking {self.address} {self.opened}'
+        return f"Parking {self.address} {self.opened}"
 
     def to_json(self) -> Dict[str, Any]:
-        return {c.name: getattr(self, c.name) for c in
-                self.__table__.columns}
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
 
 
 class ClientParking(db.Model):
-    __tablename__ = 'client_parking'
+    __tablename__ = "client_parking"
 
     id = db.Column(db.Integer, primary_key=True)
-    client_id = db.Column(db.Integer, db.ForeignKey('client.id'), nullable=False, unique=True)
-    parking_id = db.Column(db.Integer, db.ForeignKey('parking.id'), nullable=False, unique=True)
+    client_id = db.Column(
+        db.Integer, db.ForeignKey("client.id"), nullable=False, unique=True
+    )
+    parking_id = db.Column(
+        db.Integer, db.ForeignKey("parking.id"), nullable=False, unique=True
+    )
     time_on = db.Column(db.DateTime, nullable=True)
     time_out = db.Column(db.DateTime, nullable=True)
 
-    client = db.relationship('Client', back_populates='id_client')
-    parking = db.relationship('Parking', back_populates='id_parking')
-
-
+    client = db.relationship("Client", back_populates="id_client")
+    parking = db.relationship("Parking", back_populates="id_parking")
 
     def __repr__(self):
-        return f'Client_Parking {self.client_id} {self.parking_id}'
+        return f"Client_Parking {self.client_id} {self.parking_id}"
 
     def to_json(self) -> Dict[str, Any]:
-        return {c.name: getattr(self, c.name) for c in
-                self.__table__.columns}
-
-
+        return {c.name: getattr(self, c.name) for c in self.__table__.columns}
