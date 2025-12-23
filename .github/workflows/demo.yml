@@ -35,4 +35,7 @@ jobs:
         run: black --check --diff .
       - name: Run Isort
         run: isort . --check --diff        
-
+      - name: Run Flake8
+        run: flake8
+      - name: Run Mypy
+        run: mypy        
