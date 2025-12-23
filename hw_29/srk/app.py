@@ -117,7 +117,7 @@ def create_app():
         else:
             return "No parking!", 200
 
-    @app.route("/client_parkings/", methods=['DELETE'])
+    @app.route("/client_parkings/", methods=["DELETE"])
     def delete_client_parking_handler():
         """
         entrance to parking
