@@ -99,7 +99,7 @@ def create_app():
         parking: Parking = db.session.query(Parking).get(parking_id)
         if parking.opened == True:
             if parking.count_available_places > 0:
-                current_date = datetime.datetime.now()
+                current_date = datetime.now()
                 new_parking = ClientParking(
                     id=id,
                     client_id=client_id,
@@ -132,7 +132,7 @@ def create_app():
 
         availability_credit_cart: Client = db.session.query(Client).get(client_id)
         if availability_credit_cart.credit_cart:
-            date_of_return = datetime.datetime.now()
+            date_of_return = datetime.now()
 
             i = (
                 db.session.query(ClientParking)
