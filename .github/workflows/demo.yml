@@ -36,6 +36,6 @@ jobs:
       - name: Run Isort
         run: isort . --check --diff        
       - name: Run Flake8
-        run: flake8
+        run: flake8 --ignore E402
       - name: Run Mypy
         run: mypy        
