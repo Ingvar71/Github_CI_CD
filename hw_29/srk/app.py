@@ -1,8 +1,7 @@
-import datetime
 from datetime import datetime
 from typing import List
 
-from flask import Flask, jsonify, render_template, request
+from flask import Flask, jsonify, request
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
@@ -73,14 +72,14 @@ def create_app():
         address = request.form.get("address", type=str)
         opened = request.form.get("opened", type=bool)
         count_place = request.form.get("count_place", type=int)
-        count_available_places = request.form.get("count_available_places", type=int)
+        count_free_pls = request.form.get("count_available_places", type=int)
 
         new_parking = Parking(
             id=id,
             address=address,
             opened=opened,
             count_place=count_place,
-            count_available_places=count_available_places,
+            count_available_places=count_free_pls,
         )
 
         db.session.add(new_parking)
@@ -97,10 +96,10 @@ def create_app():
         parking_id = request.form.get("parking_id", type=int)
 
         parking: Parking = db.session.query(Parking).get(parking_id)
-        if parking.opened == True:
+        if parking.opened is True:
             if parking.count_available_places > 0:
                 current_date = datetime.now()
-                new_parking = ClientParking(
+                n_park = ClientParking(
                     id=id,
                     client_id=client_id,
                     parking_id=parking_id,
@@ -108,7 +107,7 @@ def create_app():
                     time_out=None,
                 )
 
-                db.session.add(new_parking)
+                db.session.add(n_park)
 
                 count = parking.count_available_places
                 if count:
@@ -130,26 +129,18 @@ def create_app():
         client_id = request.form.get("client_id", type=int)
         parking_id = request.form.get("parking_id", type=int)
 
-        availability_credit_cart: Client = db.session.query(Client).get(client_id)
-        if availability_credit_cart.credit_cart:
+        client = ClientParking.client_id == client_id
+        park = ClientParking.parking_id == parking_id
+
+        validity_credit_cart: Client = db.session.query(Client).get(client_id)
+        if validity_credit_cart.credit_cart:
             date_of_return = datetime.now()
 
-            i = (
-                db.session.query(ClientParking)
-                .filter(
-                    ClientParking.client_id == client_id
-                    and ClientParking.parking_id == parking_id
-                )
-                .first()
-            )
+            i = db.session.query(ClientParking).filter(client and park).first()
             i.time_out = date_of_return
             db.session.commit()
 
             parking: Parking = db.session.query(Parking).get(parking_id)
-            # count = parking.count_available_places
-            # if count:
-            #     parking.count_available_places = count + 1
-            #     db.session.commit()
 
             if i:
                 deleted_row_json = dict(
